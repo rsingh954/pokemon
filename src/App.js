@@ -4,7 +4,20 @@ let url = 'https://pokeapi.co/api/v2/pokemon/?limit=5'
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
-
+const Header = () => {
+  return (
+    <nav>
+      <h1>Pokemon</h1>
+    </nav>
+  )
+}
+const Footer = () => {
+  return(
+    <div className="footer">
+        <p>Copyright &#169; 2021 <a target="blank" href="https://github.com/rsingh954">github.com/rsingh954</a></p>
+    </div>
+  )
+}
 const Item = ({ title, id, stats, img, types, weight }) => {
   const [showInfo, setShowInfo ] = useState(false)
   const onClick = (e) =>{
@@ -15,7 +28,7 @@ const Item = ({ title, id, stats, img, types, weight }) => {
       <div className="container-heading">
         <img style={{display: showInfo ? 'block': 'none'}} src={img} alt="pokepic" />
         <h1>{title}</h1>
-      <span> 00{id} </span>
+      <p> 00{id} </p>
       </div>
       {showInfo ? (
         <div className="dropdown container">
@@ -102,17 +115,19 @@ const handlePrevClick = () => {
 }
   return (
     <div className="app"> 
+    <Header />
+    <main>
     {
       list.map((pokemon) => (
          <Item key={pokemon.id} weight={pokemon.weight} types={pokemon.types} img={pokemon.sprites.front_shiny} url ={pokemon.url} title={capitalizeFirstLetter(pokemon.name)} id={pokemon.id} stats={pokemon.stats}/>
       ))
     }
-    <div className="button-group" style={{display: "flex", width: '100%', justifyContent: 'center', marginTop: '8px', gap: '32px'}}>
+    <div className="button-group" style={{display: "flex", width: '100%', justifyContent: 'center', marginTop: '3rem', gap: '32px'}}>
     <button onClick = {handlePrevClick}>Previous</button>
       <button  onClick = {handleNextClick}>Next</button>
     </div>
-
-
+    </main>
+    <Footer />
     </div>
   );
 }
