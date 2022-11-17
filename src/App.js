@@ -49,6 +49,7 @@ const StatsView = ({stats, showInfo, types, weight}) => {
 
 export default function App() {
   const [list, setList] = useState([]);
+  const [ offset, setOffset ] = useState(5)
 
   //The way the api is structured we must obtain a list of pokemon
   //the data
@@ -72,16 +73,33 @@ export default function App() {
         setList([...list, ...await getPokeList()])
     }
     if(list.length === 0){
-      console.log("hit the api")
       populateList()
     }
-  },[])
+    return () => {
+      list.length = 0
+    }
+  },[list])
 
 useEffect(() => {
   console.log(list)
 }, [list])
 
-
+const  handleNextClick = () => {
+  setOffset(offset => offset + 5)
+  url = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=5`
+  getPokeList().then(data => setList([...data]))
+}
+const handlePrevClick = () => {
+  if(offset ===  5){
+    url = `https://pokeapi.co/api/v2/pokemon/?limit=5`
+    getPokeList().then(data => setList([...data]))
+  }
+  else if(offset > 5){
+    setOffset(offset => offset - 5)
+    url = `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=5`
+    getPokeList().then(data => setList([...data]))
+  }
+}
   return (
     <div className="app"> 
     {
@@ -89,6 +107,12 @@ useEffect(() => {
          <Item key={pokemon.id} weight={pokemon.weight} types={pokemon.types} img={pokemon.sprites.front_shiny} url ={pokemon.url} title={capitalizeFirstLetter(pokemon.name)} id={pokemon.id} stats={pokemon.stats}/>
       ))
     }
+    <div className="button-group" style={{display: "flex", width: '100%', justifyContent: 'center', marginTop: '8px', gap: '32px'}}>
+    <button onClick = {handlePrevClick}>Previous</button>
+      <button  onClick = {handleNextClick}>Next</button>
+    </div>
+
+
     </div>
   );
 }
