@@ -23,7 +23,7 @@ const Footer = () => {
     </div>
   );
 };
-const Item = ({ title, id, stats, img, types, weight }) => {
+const Item = ({ title, id, stats, img, types, weight, loading }) => {
   const [showInfo, setShowInfo] = useState(false);
   const onClick = (e) => {
     setShowInfo(!showInfo);
@@ -119,7 +119,9 @@ export default function App() {
     <div className="app">
       <Header />
       <main>
-        {pokeData.map((pokemon) => (
+        {
+        loading ? <h1>Loading...</h1> : 
+        pokeData.map((pokemon) => (
           <Item
             key={pokemon.id}
             weight={pokemon.weight}
