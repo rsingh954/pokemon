@@ -70,6 +70,7 @@ nav > h1{
   padding: 32px;
   background-color: #1a2634;
   width: 100%;
+  color: white;
 }
 .footer > p{
   background-color: #1a2634;
@@ -98,4 +99,22 @@ button{
     justify-content: flex-start;
     align-items: flex-start;
   }
+}
+a:link {
+  color: white;
+}
+
+/* visited link */
+a:visited {
+  color: white;
+}
+
+/* mouse over link */
+a:hover {
+  color: white;
+}
+
+/* selected link */
+a:active {
+  color: white;
 }
